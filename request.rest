@@ -1,0 +1,24 @@
+GET http://localhost:3000/
+
+### GET
+GET http://localhost:3000/users/
+
+### GET
+GET http://localhost:3000/reserva/A00833416
+
+### POST
+POST http://localhost:3000/reserva/creareserva
+Content-Type: application/json
+
+{
+    "id_sala": 5,
+    "id_proyecto": 5,
+    "lider_reserva": "A00833416",
+    "fecha_generada": "2024-04-12",
+    "dia_reserva": "2024-04-21",
+    "hora_inicio": "10:00",
+    "hora_final": "12:00"
+}
+
+### GET
+GET http://localhost:3000/proyecto/A00833416
