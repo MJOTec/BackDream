@@ -4,7 +4,7 @@ const cors = require('cors'); // Importa el middleware cors
 dotenv.config()
 
 const app = express()
-const port = 3000
+const port = 5001
 
 var swaggerUI = require('swagger-ui-express');
 var swaggerDocument = require('./swagger.json');
