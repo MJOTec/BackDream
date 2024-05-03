@@ -8,6 +8,15 @@ module.exports = {
         FROM Reserva AS R
         JOIN Proyecto AS P ON R.id_proyecto = P.id_proyecto
         JOIN Sala AS S ON R.id_sala = S.id_sala
+        INNER JOIN AlumnosReserva AS AR ON R.id_reserva = AR.id_reserva
+        WHERE AR.matricula = '${matricula}'
+        
+        UNION
+        
+        SELECT R.*, P.nombre AS nombre_proyecto, S.nombre AS nombre_sala
+        FROM Reserva AS R
+        JOIN Proyecto AS P ON R.id_proyecto = P.id_proyecto
+        JOIN Sala AS S ON R.id_sala = S.id_sala
         WHERE R.lider_reserva = '${matricula}';`
         const result = await pool.request().query(sql);
         console.log("", result)
@@ -24,7 +33,7 @@ module.exports = {
         return result.recordset;
       },
 
-      createReservaQuery: async (id_sala, id_proyecto, lider_reserva, dia_reserva, hora_inicio, hora_final, dispositivos) => {
+      createReservaQuery: async (id_sala, id_proyecto, lider_reserva, dia_reserva, hora_inicio, hora_final, dispositivos, integrantes) => {
         console.log("Datos recibidos service:");
         console.log("ID de sala:", id_sala);
         console.log("ID de proyecto:", id_proyecto);
@@ -32,17 +41,43 @@ module.exports = {
         console.log("Día de reserva:", dia_reserva);
         console.log("Hora de inicio:", hora_inicio);
         console.log("Hora final:", hora_final);
-        console.log("Hora final:", dispositivos);
+        console.log("Dispositivos:", dispositivos);
+        console.log("Integrantes:", integrantes);
 
         const pool = await dbService.poolPromise;
       
         const sql = `
           INSERT INTO Reserva (id_sala, id_proyecto, lider_reserva, fecha_generada, dia_reserva, hora_inicio, hora_final)
-          VALUES (${id_sala}, ${id_proyecto}, '${lider_reserva}', GETDATE() , '${dia_reserva}', '${hora_inicio}', '${hora_final}')
+          VALUES (${id_sala}, ${id_proyecto}, '${lider_reserva}', GETDATE() , '${dia_reserva}', '${hora_inicio}', '${hora_final}');
+          SELECT SCOPE_IDENTITY() AS id_reserva;
         `;
       
         try {
           const result = await pool.request().query(sql);
+          const idReserva = result.recordset[0].id_reserva; // Obtener el ID de la reserva recién insertada
+          console.log("ID de reserva insertada:", idReserva);
+          for (const integrante of integrantes) {
+            // Verificar si ya existe una relación de alumno-reserva con el mismo id_reserva y matricula
+            const existingRelationQuery = `
+              SELECT COUNT(*) AS count
+              FROM AlumnosReserva
+              WHERE id_reserva = ${idReserva} AND matricula = '${integrante.matricula}';
+            `;
+            const existingRelationResult = await pool.request().query(existingRelationQuery);
+            const existingRelationCount = existingRelationResult.recordset[0].count;
+
+            if (existingRelationCount === 0) {
+                const insertAlumnoSql = `
+                  INSERT INTO AlumnosReserva (id_reserva, matricula)
+                  VALUES (${idReserva}, '${integrante.matricula}');
+                `;
+                await pool.request().query(insertAlumnoSql);
+                console.log(`Alumno ${integrante.matricula} asociado a la reserva ${idReserva}`);
+            } else {
+                console.log(`La relación de alumno ${integrante.matricula} con la reserva ${idReserva} ya existe. No se realiza la inserción.`);
+            }
+        }
+        
           console.log("Registro insertado correctamente:", result);
           return result.recordset;
         } catch (error) {

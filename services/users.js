@@ -10,5 +10,13 @@ module.exports = {
         console.log("", result)
         return result.recordset;
       },
+      getMatriculasQuery:  async () => {
+        const pool = await dbService.poolPromise;
+        const sql = `SELECT matricula, nombre 
+                      FROM Usuario`
+        const result = await pool.request().query(sql);
+        console.log("", result)
+        return result.recordset;
+      },
 
 };

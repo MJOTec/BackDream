@@ -39,7 +39,7 @@ module.exports = {
       },
 
       createReserva: async (req, res, next) => {
-        const { id_sala, id_proyecto, lider_reserva, dia_reserva, hora_inicio, hora_final,dispositivos} = req.body;
+        const { id_sala, id_proyecto, lider_reserva, dia_reserva, hora_inicio, hora_final,dispositivos, integrantes} = req.body;
         console.log("Datos recibidos controller:");
         console.log("ID de sala:", id_sala);
         console.log("ID de proyecto:", id_proyecto);
@@ -49,7 +49,7 @@ module.exports = {
         console.log("Hora final:", hora_final);
         console.log("dispositivos:", dispositivos);
         try {
-          reserva = await ReservaServices.createReservaQuery(id_sala, id_proyecto, lider_reserva, dia_reserva, hora_inicio, hora_final,dispositivos);
+          reserva = await ReservaServices.createReservaQuery(id_sala, id_proyecto, lider_reserva, dia_reserva, hora_inicio, hora_final,dispositivos, integrantes);
           return res.status(200).json(reserva);
         } catch (err) {
           return res
