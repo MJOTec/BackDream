@@ -1,4 +1,5 @@
-const dbService = require('../config/db.js')
+const dbService = require('../config/db.js');
+const reserva = require('../controllers/reserva.js');
 
 module.exports = {
 
@@ -84,6 +85,19 @@ module.exports = {
           console.error("Error al insertar el registro:", error);
           throw error;
         }
-      }, 
+      },
 
+      cancelReservaQuery: async (id) => {
+        try {
+          const pool = await dbService.poolPromise;
+          const sql = `execute DeleteReservas @id_reserva = '${id}';`
+          const result = await pool.request().query(sql);
+          console.log("", result)
+          return result.recordset;
+        } catch (err) {
+          console.error('Error al ejecutar la consulta SQL:', err);
+          throw err;
+        }
+      },
+      
 };

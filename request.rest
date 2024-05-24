@@ -20,5 +20,26 @@ Content-Type: application/json
     "hora_final": "12:00"
 }
 
+###
+POST https://apidream.azurewebsites.net/reserva/creareserva
+content-type: application/json
+
+{
+    "id_sala": "1",
+    "id_proyecto": "2",
+    "lider_reserva":"A00832807",
+    "dia_reserva":"2024-04-10",
+    "hora_inicio":"16:00:00.0000000",
+    "hora_final":"17:00:00.0000000",
+    "dispositivos":"",
+    "integrantes": [{"matricula": "A00833968"}]
+}
+
 ### GET
 GET http://localhost:5001/proyecto/A00833416
+
+### Delete
+DELETE http://localhost:5001/reserva/cancelarreserva/62
+
+### Get
+GET http://localhost:5001/reserva/A00832807

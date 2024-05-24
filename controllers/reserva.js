@@ -58,4 +58,17 @@ module.exports = {
         }
       },
 
+      cancelReserva: async (req, res, next) => {
+        console.log("Datos recibidos controller:");
+        const id = req.params.id;
+        try {
+          const result = await ReservaServices.cancelReservaQuery(id);
+          return res.status(200).json(result);
+        } catch (err) {
+          return res
+            .status(500)
+            .json({ message: `Error al obtener el tema. Err: ${err}` });
+        }
+      },
+
 };
