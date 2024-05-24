@@ -87,6 +87,34 @@ module.exports = {
         }
       },
 
+      createReservaChatQuery: async (id_sala, id_proyecto, lider_reserva, dia_reserva, hora_inicio, hora_final) => {
+        console.log("Datos recibidos service:");
+        console.log("ID de sala:", id_sala);
+        console.log("ID de proyecto:", id_proyecto);
+        console.log("Lider de reserva:", lider_reserva);
+        console.log("Día de reserva:", dia_reserva);
+        console.log("Hora de inicio:", hora_inicio);
+        console.log("Hora final:", hora_final);
+
+        const pool = await dbService.poolPromise;
+      
+        const sql = `
+          INSERT INTO Reserva (id_sala, id_proyecto, lider_reserva, fecha_generada, dia_reserva, hora_inicio, hora_final)
+          VALUES (${id_sala}, ${id_proyecto}, '${lider_reserva}', GETDATE() , '${dia_reserva}', '${hora_inicio}', '${hora_final}');
+          SELECT SCOPE_IDENTITY() AS id_reserva;
+        `;
+      
+        try {
+          const result = await pool.request().query(sql);
+          const idReserva = result.recordset[0].id_reserva; // Obtener el ID de la reserva recién insertada
+          console.log("ID de reserva insertada:", idReserva);
+          return result.recordset;
+        } catch (error) {
+          console.error("Error al insertar el registro:", error);
+          throw error;
+        }
+      },
+
       cancelReservaQuery: async (id) => {
         try {
           const pool = await dbService.poolPromise;
