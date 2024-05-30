@@ -34,12 +34,48 @@
         }
       }
     },
+    "/users/matriculas": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/reserva/{matricula}": {
       "get": {
         "description": "",
         "parameters": [
           {
             "name": "matricula",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/reserva/RFID/{RFID}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "RFID",
             "in": "path",
             "required": true,
             "schema": {
@@ -106,7 +142,52 @@
                   "lider_reserva": {
                     "example": "any"
                   },
-                  "fecha_generada": {
+                  "dia_reserva": {
+                    "example": "any"
+                  },
+                  "hora_inicio": {
+                    "example": "any"
+                  },
+                  "hora_final": {
+                    "example": "any"
+                  },
+                  "dispositivos": {
+                    "example": "any"
+                  },
+                  "integrantes": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reserva/creareservachat": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_sala": {
+                    "example": "any"
+                  },
+                  "id_proyecto": {
+                    "example": "any"
+                  },
+                  "lider_reserva": {
                     "example": "any"
                   },
                   "dia_reserva": {
@@ -121,6 +202,29 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/reserva/cancelarreserva/{id}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -174,6 +278,62 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/login/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "matricula": {
+                    "example": "any"
+                  },
+                  "contrasena": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/reserva-proxima": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/reserva-actual": {
+      "get": {
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
