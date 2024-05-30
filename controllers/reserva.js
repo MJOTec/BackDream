@@ -1,23 +1,23 @@
 const ReservaServices = require('../services/reserva.js')
 
 module.exports = {
-    /*
-    getDispositivos: async (req, res, next) => {
+
+      getReserva: async (req, res, next) => {
+        const matricula_usuario = req.params.matricula;
         try {
-          const categoria = req.params.categoria;
-          dispositivos = await ReservaServices.getDispositivos(categoria);
-          return res.status(200).json(dispositivos);
+          reserva = await ReservaServices.getReservaQuery(matricula_usuario);
+          return res.status(200).json(reserva);
         } catch (err) {
           return res
             .status(500)
             .json({ message: `Error al obtener el tema. Err: ${err}` });
         }
       },
-      */
-      getReserva: async (req, res, next) => {
-        const matricula_usuario = req.params.matricula;
+
+      getReservaRFID: async (req, res, next) => {
+        const RFID_usuario = req.params.RFID;
         try {
-          reserva = await ReservaServices.getReservaQuery(matricula_usuario);
+          reserva = await ReservaServices.getReservaRFIDQuery(RFID_usuario);
           return res.status(200).json(reserva);
         } catch (err) {
           return res
