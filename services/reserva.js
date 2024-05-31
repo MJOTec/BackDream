@@ -10,6 +10,27 @@ module.exports = {
         return result.recordset;
       },
 
+      getReservaQuery:  async (matricula) => {
+          const pool = await dbService.poolPromise;
+          const sql = `SELECT R.*, P.nombre AS nombre_proyecto, S.nombre AS nombre_sala
+          FROM Reserva AS R
+          JOIN Proyecto AS P ON R.id_proyecto = P.id_proyecto
+          JOIN Sala AS S ON R.id_sala = S.id_sala
+          INNER JOIN AlumnosReserva AS AR ON R.id_reserva = AR.id_reserva
+          WHERE AR.matricula = '${matricula}'
+          
+          UNION
+          
+          SELECT R.*, P.nombre AS nombre_proyecto, S.nombre AS nombre_sala
+          FROM Reserva AS R
+          JOIN Proyecto AS P ON R.id_proyecto = P.id_proyecto
+          JOIN Sala AS S ON R.id_sala = S.id_sala
+          WHERE R.lider_reserva = '${matricula}';`
+          const result = await pool.request().query(sql);
+          console.log("", result)
+          return result.recordset;
+        },
+
       getHorariosQuery: async (fecha) => {
         const pool = await dbService.poolPromise;
         const sql = `SELECT hora_inicio, hora_final
