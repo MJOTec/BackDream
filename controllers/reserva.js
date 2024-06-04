@@ -38,6 +38,18 @@ module.exports = {
         }
       },
 
+      getReservasHoy: async (req, res, next) => {
+        const fecha = req.params.fecha;
+        try {
+          horarios = await ReservaServices.getReservasHoyQuery();
+          return res.status(200).json(horarios);
+        } catch (err) {
+          return res
+            .status(500)
+            .json({ message: `Error al obtener el tema. Err: ${err}` });
+        }
+      },
+
       createReserva: async (req, res, next) => {
         const { id_sala, id_proyecto, lider_reserva, dia_reserva, hora_inicio, hora_final,dispositivos, integrantes} = req.body;
         console.log("Datos recibidos controller:");

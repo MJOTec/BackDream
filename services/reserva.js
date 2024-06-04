@@ -41,6 +41,14 @@ module.exports = {
         return result.recordset;
       },
 
+      getReservasHoyQuery:  async () => {
+        const pool = await dbService.poolPromise;
+        const sql = `EXEC GetReservasHoy;`
+        const result = await pool.request().query(sql);
+        console.log("", result)
+        return result.recordset;
+      },
+
       createReservaQuery: async (id_sala, id_proyecto, lider_reserva, dia_reserva, hora_inicio, hora_final, dispositivos, integrantes) => {
         console.log("Datos recibidos service:");
         console.log("ID de sala:", id_sala);
