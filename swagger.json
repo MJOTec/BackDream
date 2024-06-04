@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:5001/"
+      "url": "https://apidream.azurewebsites.net/"
     }
   ],
   "paths": {
@@ -106,6 +106,19 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/reserva/reservashoy": {
+      "get": {
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
