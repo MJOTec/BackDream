@@ -60,6 +60,7 @@ module.exports = {
         }
         
         console.log("Resultado de las reservas con dispositivos y alumnos:", reservas);
+        console.log("entro al endpoint de reserva")
         return reservas;
     },
     
@@ -74,7 +75,7 @@ module.exports = {
         return result.recordset;
       },
 
-      getReservasHoyQuery:  async () => {
+      getHoyQuery:  async () => {
         const pool = await dbService.poolPromise;
         const sql = `EXEC GetReservasHoy;`
         const result = await pool.request().query(sql);

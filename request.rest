@@ -60,5 +60,8 @@ DELETE https://apidream.azurewebsites.net/reserva/cancelarreserva/61
 ### Get
 GET http://localhost:5001/reserva/A00832807
 
+### Get
+GET http://localhost:5001/reserva/hoy/allreservas
+
 ###
 GET https://apidream.azurewebsites.net/admin/reserva-proxima

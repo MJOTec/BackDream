@@ -38,10 +38,10 @@ module.exports = {
         }
       },
 
-      getReservasHoy: async (req, res, next) => {
+      getHoy: async (req, res, next) => {
         const fecha = req.params.fecha;
         try {
-          horarios = await ReservaServices.getReservasHoyQuery();
+          horarios = await ReservaServices.getHoyQuery();
           return res.status(200).json(horarios);
         } catch (err) {
           return res
