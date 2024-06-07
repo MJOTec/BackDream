@@ -9,5 +9,6 @@ router.get('/hoy/allreservas', ReservaControllers.getHoy)
 router.post('/creareserva', ReservaControllers.createReserva)
 router.post('/creareservachat', ReservaControllers.createReservaChat)
 router.delete('/cancelarreserva/:id', ReservaControllers.cancelReserva)
+router.delete('/chatbot/cancelar/:id', ReservaControllers.cancelReservaChat)
 
 module.exports = router;

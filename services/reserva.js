@@ -194,11 +194,37 @@ module.exports = {
           const sql = `execute DeleteReservas @id_reserva = '${id}';`
           const result = await pool.request().query(sql);
           console.log("", result)
+          console.log("Cancelar reserva sin chat");
           return result.recordset;
         } catch (err) {
           console.error('Error al ejecutar la consulta SQL:', err);
           throw err;
         }
       },
+
+      cancelReservaChatQuery:async (id) => {
+        try {
+          const pool = await dbService.poolPromise;
+      
+          // Primero, verifica si la reserva existe
+          const checkSql = `SELECT * FROM Reserva WHERE id_reserva = ${id};`;
+          const checkResult = await pool.request().query(checkSql);
+      
+          if (checkResult.recordset.length === 0) {
+            console.log('La reserva no existe.');
+            return { message: 'La reserva no existe.' };
+          } else {
+            // Si la reserva existe, ejecuta el procedimiento almacenado
+            const deleteSql = `EXEC DeleteReservas @id_reserva = ${id};`;
+            await pool.request().query(deleteSql);
+            console.log('Reserva eliminada con éxito.');
+            return { message: 'Reserva eliminada con éxito.' };
+          }
+        } catch (err) {
+          console.error('Error al ejecutar la consulta SQL:', err);
+          throw err;
+        }
+      },
+      
       
 };
