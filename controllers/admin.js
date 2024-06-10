@@ -81,4 +81,26 @@ module.exports = {
                 .json({ message: `Error al obtener las salas. Err: ${err}` });
         }
     },
+    getAdminTodasSalasReservadasMes: async (req, res) => {
+        try {
+            const { ano, mes } = req.params;
+            TodasSalasReservadasMes = await AdminServices.getAdminTodasSalasReservadasMes(ano, mes)
+            return res.status(200).json(TodasSalasReservadasMes)
+        } catch (err) {
+            return res
+                .status(500)
+                .json({ message: `Error al obtener las salas. Err: ${err}` });
+        }
+    },
+    getAdminTodasSalasReservadasAno: async (req, res) => {
+        try {
+            const { ano } = req.params;
+            TodasSalasReservadasAno = await AdminServices.getAdminTodasSalasReservadasAno(ano)
+            return res.status(200).json(TodasSalasReservadasAno)
+        } catch (err) {
+            return res
+                .status(500)
+                .json({ message: `Error al obtener las salas. Err: ${err}` });
+        }
+    }
 };

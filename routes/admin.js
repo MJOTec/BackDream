@@ -10,5 +10,7 @@ router.get('/dispositivos-reservados-ano', AdminControllers.getAdminDispositivos
 router.get('/salas-reservadas-mes', AdminControllers.getAdminSalasReservadasMes)
 router.get('/salas-reservadas-dia', AdminControllers.getAdminSalasReservadasDia)
 router.get('/salas-reservadas-ano', AdminControllers.getAdminSalasReservadasAno)
+router.get('/todas-salas-reservadas-mes/:ano/:mes', AdminControllers.getAdminTodasSalasReservadasMes)
+router.get('/todas-salas-reservadas-ano/:ano', AdminControllers.getAdminTodasSalasReservadasAno)
 
 module.exports = router;

@@ -457,6 +457,60 @@
           }
         }
       }
+    },
+    "/admin/todas-salas-reservadas-mes/{ano}/{mes}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "ano",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "mes",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/todas-salas-reservadas-ano/{ano}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "ano",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   }
 }
