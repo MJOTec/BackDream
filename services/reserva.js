@@ -38,11 +38,11 @@ module.exports = {
             const idReserva = reserva.id_reserva;
             
             const dispositivosSql = `
-                SELECT D.nombre, COUNT(DR.id_dispositivo) AS cantidad
+                SELECT D.nombre, D.imagen, COUNT(DR.id_dispositivo) AS cantidad
                 FROM DispositivoReservado AS DR
                 JOIN Dispositivo AS D ON DR.id_dispositivo = D.id_dispositivo
                 WHERE DR.id_reserva = ${idReserva}
-                GROUP BY D.nombre;
+                GROUP BY D.nombre, D.imagen;
             `;
             
             const dispositivosResult = await pool.request().query(dispositivosSql);
