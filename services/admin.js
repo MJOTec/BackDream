@@ -28,7 +28,7 @@ module.exports = {
                         LEFT JOIN DispositivoReservado DR ON R.id_reserva = DR.id_reserva
                         LEFT JOIN Dispositivo D ON DR.id_dispositivo = D.id_dispositivo
                     WHERE 
-                        R.dia_reserva < CAST(GETDATE() AS DATE)
+                        R.dia_reserva > CAST(GETDATE() AS DATE)
                     GROUP BY
                         R.id_reserva,
                         S.nombre,
