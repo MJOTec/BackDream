@@ -4,5 +4,11 @@ const AdminControllers = require('../controllers/admin.js')
 
 router.get('/reserva-proxima', AdminControllers.getAdminReservasProximas)
 router.get('/reserva-actual', AdminControllers.getAdminReservasActuales)
+router.get('/dispositivos-reservados-mes', AdminControllers.getAdminDispositivosReservadosMes)
+router.get('/dispositivos-reservados-dia', AdminControllers.getAdminDispositivosReservadosDia)
+router.get('/dispositivos-reservados-ano', AdminControllers.getAdminDispositivosReservadosAno)
+router.get('/salas-reservadas-mes', AdminControllers.getAdminSalasReservadasMes)
+router.get('/salas-reservadas-dia', AdminControllers.getAdminSalasReservadasDia)
+router.get('/salas-reservadas-ano', AdminControllers.getAdminSalasReservadasAno)
 
 module.exports = router;

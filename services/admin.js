@@ -28,7 +28,7 @@ module.exports = {
                         LEFT JOIN DispositivoReservado DR ON R.id_reserva = DR.id_reserva
                         LEFT JOIN Dispositivo D ON DR.id_dispositivo = D.id_dispositivo
                     WHERE 
-                        R.dia_reserva < CAST(GETDATE() AS DATE)
+                        R.dia_reserva > CAST(GETDATE() AS DATE)
                     GROUP BY
                         R.id_reserva,
                         S.nombre,
@@ -85,6 +85,104 @@ module.exports = {
                         R.fecha_generada,
                         R.dia_reserva,
                         P.nombre`;
+        const result = await pool.request().query(sql);
+        console.log("", result);
+        return result.recordset;
+    },
+    getAdminDispositivosReservadosMes: async () => {
+        const pool = await dbService.poolPromise;
+        const sql = `DECLARE @startDate DATE = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1);
+                    DECLARE @endDate DATE = DATEADD(MONTH, 1, @startDate);
+
+                    SELECT 
+                        COUNT(DISTINCT DR.id_dispositivo) AS Dispositivos_Rentados
+                    FROM 
+                        DispositivoReservado DR
+                    JOIN 
+                        Reserva R ON DR.id_reserva = R.id_reserva
+                    WHERE 
+                        R.dia_reserva >= @startDate
+                        AND R.dia_reserva < @endDate;`;
+        const result = await pool.request().query(sql);
+        console.log("", result);
+        return result.recordset;
+    },
+    getAdminDispositivosReservadosDia: async () => {
+        const pool = await dbService.poolPromise;
+        const sql = `DECLARE @currentDate DATE = CAST(GETDATE() AS DATE);
+        
+                    SELECT 
+                        COUNT(DISTINCT DR.id_dispositivo) AS Dispositivos_Rentados
+                    FROM 
+                        DispositivoReservado DR
+                    JOIN 
+                        Reserva R ON DR.id_reserva = R.id_reserva
+                    WHERE 
+                        R.dia_reserva = @currentDate;`;
+        const result = await pool.request().query(sql);
+        console.log("", result);
+        return result.recordset;
+    },
+    getAdminDispositivosReservadosAno: async () => {
+        const pool = await dbService.poolPromise;
+        const sql = `DECLARE @startYear DATE = DATEFROMPARTS(YEAR(GETDATE()), 1, 1);
+                    DECLARE @endYear DATE = DATEFROMPARTS(YEAR(GETDATE()) + 1, 1, 1);
+
+                    SELECT 
+                        COUNT(DISTINCT DR.id_dispositivo) AS Dispositivos_Rentados
+                    FROM 
+                        DispositivoReservado DR
+                    JOIN 
+                        Reserva R ON DR.id_reserva = R.id_reserva
+                    WHERE 
+                        R.dia_reserva >= @startYear
+                        AND R.dia_reserva < @endYear;`;
+        const result = await pool.request().query(sql);
+        console.log("", result);
+        return result.recordset;
+    },
+    getAdminSalasReservadasMes: async () => {
+        const pool = await dbService.poolPromise;
+        const sql = `DECLARE @startDate DATE = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1);
+                    DECLARE @endDate DATE = DATEADD(MONTH, 1, @startDate);
+
+                    SELECT 
+                        COUNT(DISTINCT R.id_sala) AS Salas_Reservadas
+                    FROM 
+                        Reserva R
+                    WHERE 
+                        R.dia_reserva >= @startDate
+                        AND R.dia_reserva < @endDate;`;
+        const result = await pool.request().query(sql);
+        console.log("", result);
+        return result.recordset;
+    },
+    getAdminSalasReservadasDia: async () => {
+        const pool = await dbService.poolPromise;
+        const sql = `DECLARE @currentDate DATE = CAST(GETDATE() AS DATE);
+        
+                    SELECT 
+                        COUNT(DISTINCT R.id_sala) AS Salas_Reservadas
+                    FROM 
+                        Reserva R
+                    WHERE 
+                        R.dia_reserva = @currentDate;`;
+        const result = await pool.request().query(sql);
+        console.log("", result);
+        return result.recordset;
+    },
+    getAdminSalasReservadasAno: async () => {
+        const pool = await dbService.poolPromise;
+        const sql = `DECLARE @startYear DATE = DATEFROMPARTS(YEAR(GETDATE()), 1, 1);
+                    DECLARE @endYear DATE = DATEFROMPARTS(YEAR(GETDATE()) + 1, 1, 1);
+
+                    SELECT 
+                        COUNT(DISTINCT R.id_sala) AS Salas_Reservadas
+                    FROM 
+                        Reserva R
+                    WHERE 
+                        R.dia_reserva >= @startYear
+                        AND R.dia_reserva < @endYear;`;
         const result = await pool.request().query(sql);
         console.log("", result);
         return result.recordset;
