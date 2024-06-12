@@ -260,5 +260,13 @@ module.exports = {
         const result = await pool.request().query(sql);
         console.log("", result);
         return result.recordset;
+    },
+    postAdminSubirEvento: async (id_sala, nombre, foto, descripcion, nombre_encargado, fecha_evento, hora_inicio, hora_final) => {
+        const pool = await dbService.poolPromise;
+        const sql = `INSERT INTO Evento (id_sala, nombre, foto, descripcion, nombre_encargado, fecha_evento, hora_inicio, hora_final)
+                    VALUES (${id_sala}, '${nombre}', '${foto}', '${descripcion}', '${nombre_encargado}', '${fecha_evento}', '${hora_inicio}', '${hora_final}');`;
+        const result = await pool.request().query(sql);
+        console.log("", result);
+        return result;
     }
 };
