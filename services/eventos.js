@@ -12,10 +12,11 @@ module.exports = {
     },
     getEventosMatriculaQuery: async (matricula) => {
         const pool = await dbService.poolPromise;
-        const sql = `SELECT e.*
+        const sql = `SELECT e.*, s.nombre AS nombre_sala
         FROM Evento e
         JOIN EventoReserva er ON e.id_evento = er.id_evento
-        WHERE er.matricula = '${matricula}'`;
+        JOIN Sala s ON e.id_sala = s.id_sala
+        WHERE er.matricula = '${matricula}';`;
         const result = await pool.request().query(sql);
         console.log("", result);
         return result.recordset;
