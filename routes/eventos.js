@@ -3,5 +3,7 @@ const router = express.Router()
 const EventosControllers = require('../controllers/eventos.js')
 
 router.get('/', EventosControllers.getEventos)
+router.get('/:matricula', EventosControllers.getEventosMatricula)
+
 
 module.exports = router;
