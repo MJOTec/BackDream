@@ -68,18 +68,3 @@ GET https://apidream.azurewebsites.net/admin/reserva-proxima
 
 ###
 DELETE http://localhost:5001/reserva/chatbot/cancelar/86
-
-###
-POST http://localhost:5001/admin/subir-evento
-content-type: application/json
-
-{
-    "id_sala": 2,
-    "nombre": "Evento de prueba",
-    "foto": "https://www.google.com",
-    "descripcion": "Evento de prueba",
-    "nombre_encargado": "Mich",
-    "fecha_evento": "2024-04-10",
-    "hora_inicio":"16:00",
-    "hora_final":"17:00"
-}

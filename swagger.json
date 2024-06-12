@@ -511,54 +511,6 @@
           }
         }
       }
-    },
-    "/admin/subir-evento": {
-      "post": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id_sala": {
-                    "example": "any"
-                  },
-                  "nombre": {
-                    "example": "any"
-                  },
-                  "foto": {
-                    "example": "any"
-                  },
-                  "descripcion": {
-                    "example": "any"
-                  },
-                  "nombre_encargado": {
-                    "example": "any"
-                  },
-                  "fecha_evento": {
-                    "example": "any"
-                  },
-                  "hora_inicio": {
-                    "example": "any"
-                  },
-                  "hora_final": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   }
 }
