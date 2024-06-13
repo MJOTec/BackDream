@@ -5,7 +5,7 @@ module.exports = {
         
         
         const pool = await dbService.poolPromise;
-        const sql = `select matricula, contrasena from Usuario WHERE matricula = '${matricula}' AND contrasena = '${contrasena}'`;
+        const sql = `select matricula, contrasena , rol from Usuario WHERE matricula = '${matricula}' AND contrasena = '${contrasena}'`;
         const result = await pool.request().query(sql);
         console.log("", result);
         return result.recordset;

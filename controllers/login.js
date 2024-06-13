@@ -11,13 +11,15 @@ module.exports = {
         
         try{
             login = await LoginServices.getLoginQuery(matricula, contrasena);
+            const { rol } = login[0];
+
             if(login.length > 0){
 
                 const token = jwt.sign( {matricula},  "Stack",  {
                     expiresIn: '1m' //expira en estos dias
                 });
 
-                return res.status(200).json({token, matricula})
+                return res.status(200).json({token, matricula, rol})
             } else {
                 console.log("no hay nada");
                 return res.send({message: "el usuario o la contraseña son incorrecto"});
