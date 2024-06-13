@@ -39,6 +39,28 @@ module.exports = {
         }
     },
 
+    addLiderProyecto: async (id_proyecto, matricula) => {
+        console.log("Datos recibidos para agregar integrante:");
+        console.log("ID del proyecto:", id_proyecto);
+        console.log("Matrícula:", matricula);
+
+        const pool = await dbService.poolPromise;
+
+        const sql = `
+            INSERT INTO Integrante (id_proyecto, matricula)
+            VALUES (${id_proyecto}, '${matricula}');
+        `;
+
+        try {
+            const result = await pool.request().query(sql);
+            console.log(`Integrante con matrícula ${matricula} agregado al proyecto ${id_proyecto}`);
+            return result;
+        } catch (error) {
+            console.error("Error al insertar el integrante:", error);
+            throw error;
+        }
+    },
+
     addIntegrante: async (id_proyecto, matricula) => {
         console.log("Datos recibidos para agregar integrante:");
         console.log("ID del proyecto:", id_proyecto);

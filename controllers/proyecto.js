@@ -26,6 +26,7 @@ module.exports = {
             const id_proyecto = nuevoProyecto.id_proyecto;
             
             // Paso 3: Registrar integrantes si el arreglo de matrículas no está vacío
+            ProyectoServices.addLiderProyecto(id_proyecto, lider_proyecto);
             if (Array.isArray(matriculas) && matriculas.length > 0) {
                 for (const matricula of matriculas) {
                     await ProyectoServices.addIntegrante(id_proyecto, matricula);
