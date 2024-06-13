@@ -68,3 +68,16 @@ GET https://apidream.azurewebsites.net/admin/reserva-proxima
 
 ###
 DELETE http://localhost:5001/reserva/chatbot/cancelar/86
+
+###
+### Crear Proyecto
+POST http://localhost:5001/proyecto/crearproyecto
+Content-Type: application/json
+
+{
+    "nombre": "Proyecto F",
+    "descripcion": "Descripción del Proyecto F",
+    "imagen": "https://example.com/image.jpg",
+    "lider_proyecto": "lider123",
+    "matriculas": ["A00832807", "A00829931"]
+}
