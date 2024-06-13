@@ -1,6 +1,30 @@
 const AdminServices = require('../services/admin.js')
 
 module.exports = {
+    
+
+    postAdminCrearEvento: async (req, res) => {
+
+        const {id_sala, nombre, foto, descripcion, nombre_encargado, fecha_evento, hora_inicio, hora_final} = req.body;
+            console.log(id_sala);
+            console.log(nombre);
+            console.log(foto);
+            console.log(descripcion);
+            console.log(nombre_encargado);
+            console.log(fecha_evento);
+            console.log(hora_inicio);
+            console.log(hora_final);
+
+        try {
+            const subirEvento = await AdminServices.postAdminCrearEventoQuery(id_sala, nombre, foto, descripcion, nombre_encargado, fecha_evento, hora_inicio, hora_final);
+            return res.status(200).json(subirEvento);
+        } catch (err) {
+            return res
+                .status(500)
+                .json({ message: `Error al subir evento. Err: ${err} `});
+        }
+    },
+
     getAdminReservasProximas: async (req, res) => {
         try{
             ReservaProximas = await AdminServices.getAdminReservasProximas()
