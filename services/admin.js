@@ -3,7 +3,7 @@ const dbService = require('../config/db.js');
 module.exports = {
     postAdminCrearEventoQuery: async (id_sala, nombre, imagen, descripcion, nombre_encargado, fecha_evento, hora_inicio, hora_final) => {
         const pool = await dbService.poolPromise;
-        const sql = `INSERT INTO Evento (id_sala, nombre, foto, descripcion, nombre_encargado, fecha_evento, hora_inicio, hora_final, cupo)
+        const sql = `INSERT INTO Evento (id_sala, nombre, imagen, descripcion, nombre_encargado, fecha_evento, hora_inicio, hora_final, cupo)
                     VALUES (${id_sala}, '${nombre}', '${imagen}', '${descripcion}', '${nombre_encargado}', '${fecha_evento}', '${hora_inicio}', '${hora_final}', 30);`;
         const result = await pool.request().query(sql);
         console.log("", result);
