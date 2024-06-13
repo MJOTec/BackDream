@@ -5,10 +5,10 @@ module.exports = {
 
     postAdminCrearEvento: async (req, res) => {
 
-        const {id_sala, nombre, foto, descripcion, nombre_encargado, fecha_evento, hora_inicio, hora_final} = req.body;
+        const {id_sala, nombre, imagen, descripcion, nombre_encargado, fecha_evento, hora_inicio, hora_final} = req.body;
             console.log(id_sala);
             console.log(nombre);
-            console.log(foto);
+            console.log(imagen);
             console.log(descripcion);
             console.log(nombre_encargado);
             console.log(fecha_evento);
@@ -16,7 +16,7 @@ module.exports = {
             console.log(hora_final);
 
         try {
-            const subirEvento = await AdminServices.postAdminCrearEventoQuery(id_sala, nombre, foto, descripcion, nombre_encargado, fecha_evento, hora_inicio, hora_final);
+            const subirEvento = await AdminServices.postAdminCrearEventoQuery(id_sala, nombre, imagen, descripcion, nombre_encargado, fecha_evento, hora_inicio, hora_final);
             return res.status(200).json(subirEvento);
         } catch (err) {
             return res
