@@ -45,10 +45,29 @@ module.exports = {
             // Si ya existe el registro
             return { message: 'Este evento ya ha sido reservado' };
         } else {
-            // Si no existe el registro, realizar la inserción
-            const insertSql = `INSERT INTO EventoReserva (id_evento, matricula) VALUES ('${id_evento}', '${matricula}');`;
-            const insertResult = await pool.request().query(insertSql);
-            return { message: 'Tu evento ha sido reservado con éxito', result: insertResult.recordset };
+            try {
+                // Iniciar una transacción
+                const transaction = await pool.transaction();
+                await transaction.begin();
+    
+                // Si no existe el registro, realizar la inserción
+                const insertSql = `INSERT INTO EventoReserva (id_evento, matricula) VALUES ('${id_evento}', '${matricula}');`;
+                await transaction.request().query(insertSql);
+    
+                // Actualizar el atributo cupo en la tabla Evento
+                const updateSql = `UPDATE Evento SET cupo = cupo - 1 WHERE id_evento = '${id_evento}';`;
+                await transaction.request().query(updateSql);
+    
+                // Confirmar la transacción
+                await transaction.commit();
+    
+                return { message: 'Tu evento ha sido reservado con éxito' };
+            } catch (err) {
+                // En caso de error, revertir la transacción
+                if (transaction) await transaction.rollback();
+                throw err;
+            }
         }
     },
+    
 };
